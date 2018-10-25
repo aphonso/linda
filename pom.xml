@@ -50,6 +50,13 @@
 			<artifactId>transport</artifactId>
 		</dependency>
 
+		<!-- Provides a rate limit -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>23.0</version>
+		</dependency>
+
 		<!-- Junit capabilities and surefire executor -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

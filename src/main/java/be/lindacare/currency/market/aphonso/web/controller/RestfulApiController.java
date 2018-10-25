@@ -1,4 +1,4 @@
-package be.lindacare.currency.market.aphonso.controller;
+package be.lindacare.currency.market.aphonso.web.controller;
 
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import be.lindacare.currency.market.aphonso.config.WebConfig;
 import be.lindacare.currency.market.aphonso.domain.ExchangeRate;
 import be.lindacare.currency.market.aphonso.service.ExchangeRateService;
 
@@ -22,7 +23,7 @@ import be.lindacare.currency.market.aphonso.service.ExchangeRateService;
  *
  */
 @RestController
-@RequestMapping("/api/v1/linda/market")
+@RequestMapping(WebConfig.RESTFUL_API_MARKET_URL)
 public class RestfulApiController {
 	
 	@Autowired

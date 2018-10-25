@@ -2,6 +2,7 @@ package be.lindacare.currency.market.aphonso;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * 
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Application Entry-point
  *
  */
+@ServletComponentScan
 @SpringBootApplication
 public class Application {
 	
