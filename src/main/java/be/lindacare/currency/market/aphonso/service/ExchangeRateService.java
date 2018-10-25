@@ -14,4 +14,6 @@ public interface ExchangeRateService {
 	public ExchangeRate save(ExchangeRate entity);
 	
 	public Iterable<ExchangeRate> findAll();
+	
+	public long count();
 }

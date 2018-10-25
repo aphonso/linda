@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/headerFragment :: header"/>
+<body>
+	<div class="container-fluid h-100">
+		<div id="mainContent" class="row h-100">
+			<div id="column-body-content" class="col-sm-12">
+				<p class="text-primary display-4">Linda Care</p>
+				<br/>
+			    <div class="col-sm-6">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><b>Number of loaded exchange rates</b></td>
+								<td th:text="${totalExchangeRates}"/>
+							</tr>
+							<tr>
+								<td><b>Executed time</b></td>
+								<td th:text="${timestamp}"/>
+							</tr>
+						</tbody>
+					</table>    
+			    </div>
+			    <div class="col-sm-6">
+			    </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

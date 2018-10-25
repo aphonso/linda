@@ -28,4 +28,9 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	public Iterable<ExchangeRate> findAll() {
 		return this.exchangeRateRepository.findAll();
 	}
+
+	@Override
+	public long count() {
+		return this.exchangeRateRepository.count();
+	}
 }
