@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<!-- Logging testing configuration -->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+	<logger name="org.springframework" level="ERROR"/>
+	<!-- If you change org.springframework.test.web to DEBUG level you can see
+	the requests debug information -->
+    <logger name="org.springframework.test.web" level="ERROR"/>
+    <logger name="be.lindacare.market.aphonso" level="DEBUG"/>
+</configuration>

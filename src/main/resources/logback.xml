@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+
+	<property name="LOGS_HOME" value="./logs" />
+	
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="SPRING-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_HOME}/spring.debug.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOGS_HOME}/archived/spring.debug.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+
+	<appender name="LINDA-CARE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_HOME}/lindacare.debug.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOGS_HOME}/archived/lindacare.debug.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+
+	<!-- Logging configuration -->
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+	<logger name="org.springframework" level="DEBUG" additivity="false" >
+		<appender-ref ref="SPRING-AUDIT" />		
+	</logger>
+	
+	<logger name="be.lindacare.market.aphonso" level="DEBUG" additivity="false" >
+		<appender-ref ref="LINDA-CARE-AUDIT" />		
+	</logger>
+
+	<logger name="org.springframework" level="INFO" additivity="true" />
+	
+	<logger name="be.lindacare.market.aphonso" level="INFO" additivity="true" />
+	
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+	</root>
+	
+</configuration>
