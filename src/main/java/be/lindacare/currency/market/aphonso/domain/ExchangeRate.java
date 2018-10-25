@@ -19,12 +19,14 @@ import lombok.Data;
  * 
  * @author aphonso
  * 
- * POJO to store the currency market exchange rate
+ * POJO to store the currency market exchange rate.
+ * 
+ * Builds the index dynamically allowing to make tests in a different index.
  *
  */
 @Data // Lombok generate setters/getters, hashCode, equals and toString
 @Builder // Builder pattern
-@Document(indexName = "currencymarket", type = "exchangeRate")
+@Document(indexName = "#{@indexName}", type = "exchangeRate")
 public class ExchangeRate {
 
 	@Id

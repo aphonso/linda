@@ -23,6 +23,7 @@
 		<webjars.bootstrap.version>4.1.3</webjars.bootstrap.version>
 		<webjars.popper.version>1.14.3</webjars.popper.version>
 		<webjars.jquery.version>3.3.1</webjars.jquery.version>
+		<swagger.version>2.9.2</swagger.version>
 	</properties>
 
 	<dependencies>
@@ -39,6 +40,20 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Brings security abilities to the Spring Boot and Management Server 
+			User, Role (high-level) and Privilege (low-level, granular privilege/authority) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Allows testing spring security user and roles by providing MockMvc -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Server-side Java template engine -->
@@ -92,6 +107,20 @@
 		    <artifactId>guava</artifactId>
 		    <version>23.0</version>
 		</dependency>
+		
+		<!-- Creates API endpoint information JSON -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>${swagger.version}</version>
+		</dependency>
+
+		<!-- Creates API endpoint information UI -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+		    <version>${swagger.version}</version>
+        </dependency>
 
 		<!-- Junit capabilities and surefire executor -->
 		<dependency>

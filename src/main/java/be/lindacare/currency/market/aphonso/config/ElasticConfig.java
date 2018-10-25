@@ -25,7 +25,10 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @EnableElasticsearchRepositories(basePackages = "be.lindacare.currency.market.aphonso.repository")
 public class ElasticConfig {
 
-    @Value("${elasticsearch.clustername}")
+    @Value("${elasticsearch.index.name}")
+    private String indexName;
+
+    @Value("${elasticsearch.cluster.name}")
     private String clusterName;
 
     @Value("${elasticsearch.host}")
@@ -33,6 +36,11 @@ public class ElasticConfig {
 
     @Value("${elasticsearch.port}")
     private int port;
+
+    @Bean
+    public String indexName() {
+        return this.indexName;
+    }
 	
 	@Bean
 	@SuppressWarnings("resource")
