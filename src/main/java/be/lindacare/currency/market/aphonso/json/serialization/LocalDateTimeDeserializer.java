@@ -1,14 +1,22 @@
-package be.lindacare.market.aphonso.json.serialization;
+package be.lindacare.currency.market.aphonso.json.serialization;
 
 import java.io.IOException;
+
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
-import be.lindacare.market.aphonso.config.JsonConfig;
+import be.lindacare.currency.market.aphonso.config.JsonConfig;
 
+/**
+ * 
+ * @author aphonso
+ * 
+ * Allows the JSON Deserialization to have LocalDateTime custom formatter
+ *
+ */
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
 	@Override

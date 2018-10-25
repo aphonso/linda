@@ -57,13 +57,13 @@
 		<appender-ref ref="SPRING-AUDIT" />		
 	</logger>
 	
-	<logger name="be.lindacare.market.aphonso" level="DEBUG" additivity="false" >
+	<logger name="be.lindacare.currency.market.aphonso" level="DEBUG" additivity="false" >
 		<appender-ref ref="LINDA-CARE-AUDIT" />		
 	</logger>
 
 	<logger name="org.springframework" level="INFO" additivity="true" />
 	
-	<logger name="be.lindacare.market.aphonso" level="INFO" additivity="true" />
+	<logger name="be.lindacare.currency.market.aphonso" level="INFO" additivity="true" />
 	
 	<root level="INFO">
 		<appender-ref ref="CONSOLE" />

@@ -1,6 +1,7 @@
-package be.lindacare.market.aphonso.controller;
+package be.lindacare.currency.market.aphonso.controller;
 
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.lindacare.market.aphonso.domain.CurrencyExchangeRate;
-import be.lindacare.market.aphonso.service.CurrencyExchangeRateService;
+import be.lindacare.currency.market.aphonso.domain.ExchangeRate;
+import be.lindacare.currency.market.aphonso.service.ExchangeRateService;
 
 /**
  * 
@@ -25,15 +26,15 @@ import be.lindacare.market.aphonso.service.CurrencyExchangeRateService;
 public class RestfulApiController {
 	
 	@Autowired
-	private CurrencyExchangeRateService currencyExchangeRateService;
+	private ExchangeRateService exchangeRateService;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CurrencyExchangeRate> findAllExchangeRates() {
-		return this.currencyExchangeRateService.findAll();
+	public Iterable<ExchangeRate> findAllExchangeRates() {
+    	return StreamSupport.stream(exchangeRateService.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public CurrencyExchangeRate addExchangeRate(@RequestBody CurrencyExchangeRate entity) {
-		return this.currencyExchangeRateService.save(entity);
+	public ExchangeRate addExchangeRate(@RequestBody ExchangeRate entity) {
+		return this.exchangeRateService.save(entity);
 	}
 }

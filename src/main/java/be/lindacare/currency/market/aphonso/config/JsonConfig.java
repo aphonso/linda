@@ -1,4 +1,4 @@
-package be.lindacare.market.aphonso.config;
+package be.lindacare.currency.market.aphonso.config;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -6,6 +6,13 @@ import java.util.Locale;
 
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 
+ * @author aphonso
+ * 
+ * Class that configures JSON date time formatter
+ *
+ */
 @Configuration
 public class JsonConfig {
 

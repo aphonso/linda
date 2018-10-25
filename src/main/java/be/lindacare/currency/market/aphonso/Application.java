@@ -1,8 +1,7 @@
-package be.lindacare.market.aphonso;
+package be.lindacare.currency.market.aphonso;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 
@@ -11,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Application Entry-point
  *
  */
-@EnableScheduling
 @SpringBootApplication
 public class Application {
 	
