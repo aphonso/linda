@@ -5,7 +5,7 @@ Linda Exercise
 * Request Rate limit per second 80
 
 ## Kibana:
-* http://35.204.152.155:8032
+* http://[SERVER]:[PORT]/app/kibana
 
 ## Application endpoints:
 
