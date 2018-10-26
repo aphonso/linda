@@ -77,14 +77,18 @@ public class RestfulApiControllerTest extends AbstractTests {
 	@Test
 	public void test_no_login_urls() throws Exception {
 
+		Thread.sleep(1000);
 		// Checks that the swagger ui works without login
-		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(content().contentType(MediaType.TEXT_HTML)).andExpect(status().isOk()).andDo(log());
+		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that the total number of requests works without login
 		this.mockMvc.perform(get(WebConfig.BASE_URL)).andExpect(content().contentType(TEXT_HTML_UTF8)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that post is not allowed without credentials
 		this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_UTF8).content(this.expectedExchangeRate1Json)).andExpect(status().isUnauthorized()).andDo(log());
+		Thread.sleep(1000);
 	}
 
 	// Validates all endpoints with mocked user but no roles
@@ -92,14 +96,18 @@ public class RestfulApiControllerTest extends AbstractTests {
 	@WithMockUser(username = "user" )
 	public void test_mocked_user_no_roles_urls() throws Exception {
 
+		Thread.sleep(1000);
 		// Checks that the swagger ui works with mocked user but no roles
-		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(content().contentType(MediaType.TEXT_HTML)).andExpect(status().isOk()).andDo(log());
+		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that the total number of requests works with mocked user but no roles
 		this.mockMvc.perform(get(WebConfig.BASE_URL)).andExpect(content().contentType(TEXT_HTML_UTF8)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that post is not allowed with mocked user but no roles
 		this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_UTF8).content(this.expectedExchangeRate1Json)).andExpect(status().isForbidden()).andDo(log());
+		Thread.sleep(1000);
 	}
 	
 	// Validates all endpoints with mocked user but with a non used role
@@ -107,14 +115,18 @@ public class RestfulApiControllerTest extends AbstractTests {
 	@WithMockUser(username = "user", roles = { "WRONG_ROLE" } )
 	public void test_mocked_user_wrong_roles_urls() throws Exception {
 
+		Thread.sleep(1000);
 		// Checks that the swagger ui works with mocked user but with a non used role
 		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(content().contentType(MediaType.TEXT_HTML)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that the total number of requests works with mocked user but with a non used role
 		this.mockMvc.perform(get(WebConfig.BASE_URL)).andExpect(content().contentType(TEXT_HTML_UTF8)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that post is not allowed with mocked user but with a non used role
 		this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_UTF8).content(this.expectedExchangeRate1Json)).andExpect(status().isForbidden()).andDo(log());
+		Thread.sleep(1000);
 	}
 	
 	@Test
@@ -122,19 +134,27 @@ public class RestfulApiControllerTest extends AbstractTests {
 	@SuppressWarnings("unchecked")
 	public void test_mocked_user_right_roles_urls() throws Exception {
 
+		Thread.sleep(1000);
 		// Checks that the swagger ui works with mocked user with the right role
 		this.mockMvc.perform(get(WebConfig.SWAGGER_URL)).andExpect(content().contentType(MediaType.TEXT_HTML)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 		
 		// Checks that the total number of requests works with mocked user with the right role
 		this.mockMvc.perform(get(WebConfig.BASE_URL)).andExpect(content().contentType(TEXT_HTML_UTF8)).andExpect(status().isOk()).andDo(log());
+		Thread.sleep(1000);
 
 		// Clears Elastic Search Test
 		AbstractTests.setUpElasticSearch(this.esTemplate);
 		
 		// Adds 3 exchange rates
 		MvcResult actualExchangeRate1Response = this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_VALUE).content(this.expectedExchangeRate1Json)).andExpect(status().isOk()).andDo(log()).andReturn();
+		Thread.sleep(1000);
+		
 		MvcResult actualExchangeRate2Response = this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_VALUE).content(this.expectedExchangeRate2Json)).andExpect(status().isOk()).andDo(log()).andReturn();
+		Thread.sleep(1000);
+		
 		MvcResult actualExchangeRate3Response = this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_VALUE).content(this.expectedExchangeRate3Json)).andExpect(status().isOk()).andDo(log()).andReturn();
+		Thread.sleep(1000);
 
 		String actualExchangeRate1Json = actualExchangeRate1Response.getResponse().getContentAsString();
 		String actualExchangeRate2Json = actualExchangeRate2Response.getResponse().getContentAsString();
@@ -151,6 +171,7 @@ public class RestfulApiControllerTest extends AbstractTests {
 		
 		// Gets all the 3 added exchange rates
 		MvcResult actualExchangeRatesResponse = this.mockMvc.perform(get(WebConfig.RESTFUL_API_MARKET_URL)).andExpect(status().isOk()).andDo(log()).andReturn();
+		Thread.sleep(1000);
 
 		String actualExchangeRatesJson = actualExchangeRatesResponse.getResponse().getContentAsString();
 		
@@ -164,15 +185,22 @@ public class RestfulApiControllerTest extends AbstractTests {
 	@WithMockUser(username = "user", roles = { WebConfig.ROLE_ADMIN })
 	public void test_rate_limit() throws Exception {
 
+		boolean hadTooManyRequests = false;
+		
 		for(int i = 0; i < 20; i++) {
 			int status = RestfulApiControllerTest.this.mockMvc.perform(post(WebConfig.RESTFUL_API_MARKET_URL).contentType(MediaType.APPLICATION_JSON_VALUE).content(this.expectedExchangeRate1Json)).andReturn().getResponse().getStatus();
 			
 			if(status == WebConfig.TOO_MANY_REQUESTS) {
 				then(status).isEqualTo(WebConfig.TOO_MANY_REQUESTS);
+				hadTooManyRequests = true;
+				break;
 			}
 			else {
 				then(status).isEqualTo(WebConfig.OK_REQUEST);
 			}
 		}
+		
+		// It happened too many requests
+		then(hadTooManyRequests).isEqualTo(true);
 	}
 }
