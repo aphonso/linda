@@ -1,5 +1,19 @@
 package be.lindacare.currency.market.aphonso.config;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,6 +23,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.google.common.util.concurrent.RateLimiter;
 
 
 /**
@@ -24,6 +40,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
+
 	public static final int TOO_MANY_REQUESTS = 429;
 	public static final int OK_REQUEST = 200;
 
@@ -32,6 +50,24 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 	public static final String SWAGGER_URL = "/swagger-ui.html";
 	
 	public static final String ROLE_ADMIN = "ADMIN";
+
+	@Value("${restful.api.rate.limit:10}")
+	public double restfulApiRateLimit;
+	
+	private RateLimiter restfulApiRateLimiter;
+	
+	private String exceededRateLimitError;
+
+	@Bean
+    public RateLimiter restfulApiRateLimiter() {
+		
+		this.exceededRateLimitError = "You have exceeded the rate limit (rate limit = " + restfulApiRateLimit + ")";
+		this.restfulApiRateLimiter = RateLimiter.create(this.restfulApiRateLimit);
+
+		LOGGER.info("Rate Limiter loaded: {}", this.restfulApiRateLimit);
+		
+		return this.restfulApiRateLimiter;
+    }
 	
 	/**
 	 * 
@@ -65,5 +101,34 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 	    registry.addResourceHandler("/webjars/**")
 	      .addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
+    
+    @Bean
+    public Filter rateLimitFilder() {
+        return new Filter() {
+
+        	@Override
+        	public void init(FilterConfig filterConfig) throws ServletException {
+
+        	}
+
+        	@Override
+        	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+        			throws IOException, ServletException {
+
+        		if (WebConfig.this.restfulApiRateLimiter.tryAcquire()) {
+        			filterChain.doFilter(servletRequest, servletResponse);
+        		} else {
+        			HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        			response.sendError(WebConfig.TOO_MANY_REQUESTS, WebConfig.this.exceededRateLimitError);
+        		}
+        	}
+
+        	@Override
+        	public void destroy() {
+
+        	}
+        };
+    }
 }
 

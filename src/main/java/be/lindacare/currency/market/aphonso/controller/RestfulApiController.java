@@ -1,4 +1,4 @@
-package be.lindacare.currency.market.aphonso.web.controller;
+package be.lindacare.currency.market.aphonso.controller;
 
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;

@@ -7,7 +7,7 @@
 	<groupId>be.lindacare.currency.market.aphonso</groupId>
 	<artifactId>lindacareRESTfulAPI</artifactId>
 	<version>1.0.0-RELEASE</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -41,6 +41,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<!-- Tomcat will be provided and not using the embebbed version -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 		<!-- Brings security abilities to the Spring Boot and Management Server 
 			User, Role (high-level) and Privilege (low-level, granular privilege/authority) -->
