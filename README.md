@@ -4,6 +4,9 @@ Linda Exercise
 ## Application configuration:
 * Request Rate limit per second 80
 
+## Kibana:
+* http://35.204.152.155:8032
+
 ## Application endpoints:
 
 * Displays simple information about how many market exchange rate were loaded
