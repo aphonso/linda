@@ -24,8 +24,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
+	public static final int TOO_MANY_REQUESTS = 429;
+	public static final int OK_REQUEST = 200;
+
 	public static final String RESTFUL_API_MARKET_URL = "/api/v1/linda/market";
-	public static final String BASE_URL = "/"; 
+	public static final String BASE_URL = "/";
+	public static final String SWAGGER_URL = "/swagger-ui.html";
 	
 	public static final String ROLE_ADMIN = "ADMIN";
 	

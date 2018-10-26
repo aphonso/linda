@@ -2,11 +2,12 @@ package be.lindacare.currency.market.aphonso.config;
 
 import java.net.InetAddress;
 
-
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,8 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "be.lindacare.currency.market.aphonso.repository")
 public class ElasticConfig {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ElasticConfig.class);
 
     @Value("${elasticsearch.index.name}")
     private String indexName;
@@ -39,6 +42,9 @@ public class ElasticConfig {
 
     @Bean
     public String indexName() {
+    	
+    	LOGGER.info("Using Elastic Search Index: {}", this.indexName);
+    	
         return this.indexName;
     }
 	

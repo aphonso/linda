@@ -33,8 +33,6 @@ public class RestfulApiRateLimit implements Filter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RestfulApiRateLimit.class);
 
-	private static final int TOO_MANY_REQUESTS = 429;
-
 	private double restfulApiRateLimit;
 	private RateLimiter restfulApiRateLimiter;
 	private String exceededRateLimitError;
@@ -63,7 +61,7 @@ public class RestfulApiRateLimit implements Filter {
 		} else {
 			HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-			response.sendError(TOO_MANY_REQUESTS, this.exceededRateLimitError);
+			response.sendError(WebConfig.TOO_MANY_REQUESTS, this.exceededRateLimitError);
 		}
 	}
 
